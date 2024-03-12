@@ -111,4 +111,17 @@ class HelloExtension extends PluginExtensionPoint {
         new Random().with {(1..length).collect {(('a'..'z')).join(null)[ nextInt((('a'..'z')).join(null).length())]}.join(null)}
     }
 
+    /*
+     * Get the value from the key attribute within the params.genomes[genome] map
+     */
+    @Function
+    String getGenomeAttribute(String attribute) {
+        def Map genomes = (Map) session.params.genomes
+        def String genome = (String) session.params.genome
+
+        def Boolean keyExists = (genomes && genome && genomes.containsKey(genome)) ? true : false
+
+        return keyExists ? genomes[ genome ][ attribute ] : null
+    }
+
 }
